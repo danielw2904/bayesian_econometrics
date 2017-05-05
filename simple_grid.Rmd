@@ -1,0 +1,42 @@
+---
+title: "Simple Grid Approximation"
+output: html_notebook
+---
+
+Based on Richard [McElreath's Statistical Rethinking](https://github.com/rmcelreath/rethinking)
+
+# Binomial Distribution
+
+```{r}
+size <- 100
+
+p_grid <- seq(0,1,length.out=size)
+
+prior <- rep(1,size)
+prior2 <- ifelse(p_grid<0.5, 0, 1)
+prior3 <- exp(-5*(abs(p_grid-0.5)))
+
+successes <- 6
+sample_size <- 9
+
+likelihood <- dbinom(x = successes, size = sample_size, prob = p_grid)
+
+unstandardized_posterior <- likelihood*prior
+
+unstandardized_posterior2 <- likelihood*prior2
+
+unstandardized_posterior3 <- likelihood*prior3
+
+posterior <- unstandardized_posterior/sum(unstandardized_posterior)
+posterior2 <- unstandardized_posterior2/sum(unstandardized_posterior2)
+posterior3 <- unstandardized_posterior3/sum(unstandardized_posterior3)
+
+p_grid[posterior == max(posterior)]
+
+plot(x = p_grid, y = posterior, type = "b")
+
+plot(x = p_grid, y = posterior2, type = "b", main = "Prior 2")
+
+plot(x = p_grid, y = posterior3, type = "b", main = "Prior 3")
+```
+
