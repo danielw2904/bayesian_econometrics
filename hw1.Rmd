@@ -1,0 +1,48 @@
+---
+title: "Homework"
+output: html_notebook
+---
+
+
+
+```{r}
+a <- 2
+b <- 4
+
+scale <- gamma(a+b) / (gamma(a) * gamma(b))
+p_grid<-seq(0,1,length.out = 100)
+
+prior_theta <- function(a,b){
+  length_x <- 100
+  theta <- seq(0,1,length.out = length_x)
+  p_theta <- scale * (theta^(a-1)) * ((1-theta)^(b-1))
+  return(p_theta/100)
+}
+
+lik_y <- function(ptheta){
+  length_y <- 100
+  y <- seq(0,1, length.out = length_y)
+  p_y <- (ptheta^y)*((1-ptheta)^y)
+  return(p_y)
+}
+
+theta <- prior_theta(a,b)
+
+prob_y <- lik_y(theta)
+prob_y
+
+unstandardized_posterior <- prob_y*theta
+
+standardized_posterior <- unstandardized_posterior/sum(unstandardized_posterior)
+
+
+post_check <- dbeta(seq(0,1,length.out = 100), 2, 7)/100
+
+
+plot(standardized_posterior);lines(post_check, col = "red")
+
+
+
+
+```
+
