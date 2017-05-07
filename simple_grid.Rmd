@@ -3,10 +3,9 @@ title: "Simple Grid Approximation"
 output: html_notebook
 ---
 
-Based on Richard [McElreath's Statistical Rethinking](https://github.com/rmcelreath/rethinking)
-
 # Binomial Distribution
-
+Based on Richard [McElreath's Statistical Rethinking](https://github.com/rmcelreath/rethinking)
+## Grid approximation
 ```{r}
 size <- 100
 
@@ -40,3 +39,14 @@ plot(x = p_grid, y = posterior2, type = "b", main = "Prior 2")
 plot(x = p_grid, y = posterior3, type = "b", main = "Prior 3")
 ```
 
+## Quadratic Approximation
+
+```{r}
+library(rethinking)
+globe.qa <- map(alist(
+  w ~ dbinom(9,p),
+  p ~ dunif(0,1)
+), data = list(w=6))
+
+precis(globe.qa)
+```

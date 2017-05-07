@@ -3,6 +3,26 @@ title: "Homework"
 output: html_notebook
 ---
 
+I have an iid random sample $Y=(y_1,...y_N)$ with $p(y_i|\theta) = \theta^{y_i}(1-\theta)^{y_i}$ if $0\leq y_i \leq1$ and $0$ otherwise. The prior is 
+\begin{equation}
+\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\theta^{\alpha-1}(1-\theta)^{\beta-1} \quad \text{if} \quad 0 < \theta <1
+\end{equation}
+
+and $0$ otherwise.
+
+Now my thinking was the following:
+
+$p(y|\theta) = \Pi_{i=1}^N \theta^{y_i}(1-\theta)^{y_i} = \theta^{\Sigma y_i}(1-\theta)^{\Sigma y_i}$
+
+The posterior is Likelihood times Prior thus:
+
+$p(\theta | y) \propto \theta^{\Sigma y_i}(1-\theta)^{\Sigma y_i} \theta^{\alpha-1}(1-\theta)^{\beta-1} = \theta^{\Sigma y_i +\alpha-1}(1-\theta)^{\Sigma y_i + \beta-1}$
+
+This looks like a (kernel of a?) Beta distribution. 
+
+    
+And found that choosing $\alpha = 2,\beta=4$ results approximately in a beta distribution with $\alpha = 2, \beta = 7$. However, according to the calculation above the same number should be added to both parameters. Thus my twofold question: How would I determine $\Sigma_i y_i$ and how would I apply that to the example below?
+
 
 
 ```{r}
